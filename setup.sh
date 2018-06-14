@@ -16,11 +16,17 @@ else
   if [ -z "$DUNETPC_VERSION" ]; then
     echo "Please set up dunetpc."
   else
-    if [ -z "$ACLICDIR" ]; then
-      export ACLICDIR=.aclic_$DUNETPC_VERSION
+    if [ -z "$ACLICBASE" ]; then
+      ACLICBASE=$PKGDIR/.aclic
+    fi
+    NEWACLICDIR=$ACLICBASE/$DUNETPC_VERSION
+    mkdir -p $NEWACLICDIR
+    NEWACLICDIR=`readlink -f $NEWACLICDIR`
+    if [ "$ACLICDIR" != $NEWACLICDIR ]; then
+      export ACLICDIR=$NEWACLICDIR
       echo set ACLICDIR to $ACLICDIR
     fi
-    LIBDIR=$PKGDIR/$ACLICDIR/lib
+    LIBDIR=$ACLICDIR/lib
     HAVELIB=
     for LIB in `echo $LD_LIBRARY_PATH | sed 's/:/ /g'`; do
       if [ "$LIB" = $LIBDIR ]; then
