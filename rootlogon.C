@@ -6,25 +6,13 @@
 // Root startup file for dunefemb.
 
 {
-  cout << "Welcome to my DUNE root package." << endl;
-
-  // Fetch the active dunetpc version.
-  string dtver;
-  try {
-    const char* cdtver = gSystem->Getenv("DUNETPC_VERSION");
-    if ( cdtver != nullptr ) dtver = cdtver;
-  } catch(...) {
-    cout << "Must first set up dunetpc." << endl;
-    exit(1);
-  }
-  if ( dtver.size() == 0 ) {
-    cout << "Must first set up dunetpc." << endl;
-    exit(1);
-  }
+  cout << "Welcome to the DUNE root example package." << endl;
 
   // Define a build directory so object and library files don't pollute
   // the local directory.
-  // User may want to delete this when changing version of dunetpc.
+  // User may want/need to delete this if mods are made in dunetpc.
+  // The location is specified by the env variable ACLICDIR which is
+  // defined in a setup file. The location changes with the dunetpc version.
   string buildDir;
   const char* pch = gSystem->Getenv("ACLICDIR");
   if ( pch == nullptr ) {
@@ -64,7 +52,7 @@
     gSystem->AddLinkedLibs(libres.c_str());
   }
 
-  // Load the classes we would like available on the command line.
+  // Load the dunetpc classes we would like available on the command line.
   cout << "Loading dunetpc classes." << endl;
   gROOT->ProcessLine(".L $DUNETPC_INC/dune/ArtSupport/DuneToolManager.h+");
   gROOT->ProcessLine(".L $DUNETPC_INC/dune/DuneCommon/TPadManipulator.h+");
@@ -94,8 +82,8 @@
  
   // Build local tools.
   // These are art tools--configured with fcl and discovered automatically.
-  vector<string> tnames = {"ExampleAdcChannelTool"};
   // The source for tool TNAME is taken from Tool/TNAME_tool.cc.
+  vector<string> tnames = {"ExampleAdcChannelTool"};
   cout << "Building tools." << endl;
   oldBuildDir = gSystem->GetBuildDir();
   gSystem->SetBuildDir(toolLibDir.c_str());
