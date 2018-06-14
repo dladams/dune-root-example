@@ -1,0 +1,5 @@
+# mytools .fcl
+
+tools.myExampleTool: {
+  Label: "My tool"
+}

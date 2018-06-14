@@ -1,0 +1,6 @@
+tools: {
+  mytool: {
+    tool_type: ExampleAdcChannelTool
+    Label: "mytool"
+  }
+}
